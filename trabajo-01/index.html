@@ -1,0 +1,42 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Trabajo 1</title>
+</head>
+<body>
+    <h1>Evaluación de habilidades de VueJS</h1>
+    <div id="app">
+
+    <!--paso 2-->
+        <div class="ejercicio">
+            <h2>Ejercicio 1: Información de perfil simple</h2>
+            <div class="info-perfil">
+                <p><strong>Nombre: </strong>{{ nombre }}</p>
+                <p><strong>Edad: </strong>{{ edad }}</p>
+                <p><strong>Ciudad: </strong>{{ ciudad }}</p>
+            </div>
+            <div class="destacado">
+                <p>Hola, mi nombre es {{ nombre }}, tengo {{ edad }} años, y vivo en {{ ciudad }}.</p>
+            </div>
+        </div>
+    </div>
+
+    <script src="https://unpkg.com/vue@3/dist/vue.global.js"></script>
+    <script>
+        const { createApp } = Vue;
+
+        createApp({
+            data() {
+                return {
+                    // paso 2
+                    nombre: "Axel Alan",
+                    edad: 19,
+                    ciudad: "Viedma, Río Negro, Argentina"
+                }
+            }
+        }).mount('#app')
+    </script>
+</body>
+</html>
