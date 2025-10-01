@@ -21,7 +21,18 @@
                 <p>Hola, mi nombre es {{ nombre }}, tengo {{ edad }} años, y vivo en {{ ciudad }}.</p>
             </div>
         </div>
+
+    <!--paso3-->
+        <div class="ejercicio">
+            <h2>Ejercicio 2: Contador interactivo</h2>
+            <div class="contador-numero">Contador: {{ contador }}</div>
+            <div style="text-align: center;">
+                <button @click="incrementar">Incrementar</button>
+                <button @click="decrementar">Decrementar</button>
+            </div>
+        </div>
     </div>
+
 
     <script src="https://unpkg.com/vue@3/dist/vue.global.js"></script>
     <script>
@@ -33,7 +44,21 @@
                     // paso 2
                     nombre: "Axel Alan",
                     edad: 19,
-                    ciudad: "Viedma, Río Negro, Argentina"
+                    ciudad: "Viedma, Río Negro, Argentina",
+
+                    // paso 3
+                    contador: 0
+                }
+            },
+
+            methods: {
+                //paso 3: métodos del contador
+                incrementar() {
+                    this.contador++;
+                },
+
+                decrementar() {
+                    this.contador--;
                 }
             }
         }).mount('#app')
