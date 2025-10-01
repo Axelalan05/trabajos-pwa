@@ -22,13 +22,41 @@
             </div>
         </div>
 
-    <!--paso3-->
+    <!--paso 3-->
         <div class="ejercicio">
             <h2>Ejercicio 2: Contador interactivo</h2>
             <div class="contador-numero">Contador: {{ contador }}</div>
             <div style="text-align: center;">
                 <button @click="incrementar">Incrementar</button>
                 <button @click="decrementar">Decrementar</button>
+            </div>
+        </div>
+    
+    <!--paso 4-->
+        <div class="ejercicio">
+            <h2>Ejercicio 3: Lista de tareas</h2>
+            <div style="margin-bottom: 20px;">
+                <input type="text" v-model="nuevaTarea" @keyup.enter="agregarTarea" placeholder="Nueva tarea...">
+                <button @click="agregarTarea">Añadir Tarea</button>
+            </div>
+
+            <h3>Mis Tareas:</h3>
+            <div v-if="tareas.length === 0" style="color: rgb(161, 158, 158); font-style: italic;">
+                No hay tareas aún. ¡Agrega una nueva!
+            </div>
+
+            <div v-for="tarea in tareas" :key="tarea.id" class="tarea-item">
+                <input type="checkbox" :id="'tarea-' + tarea.id" v-model="tarea.completada">
+                <label :for="'tarea-' + tarea.id" :style="{textDecoration: tarea.completada ? 'line-through' : 'none', 
+                color: tarea.completada ? '#95a5a6' : '#2c3e50', 
+                opacity: tarea.completada ? 0.7 : 1}">
+                {{ tarea.texto }}
+            </label>
+            </div>
+
+            <div class="contenedor-info">
+                <p><strong>Total de Tareas:</strong> {{ totalTareas }}</p>
+                <p><strong>Tareas pendientes:</strong> {{ tareasPendientes }}</p>
             </div>
         </div>
     </div>
@@ -47,7 +75,27 @@
                     ciudad: "Viedma, Río Negro, Argentina",
 
                     // paso 3
-                    contador: 0
+                    contador: 0,
+
+                    // paso 4
+                    nuevaTarea: '',
+                    tareas: [
+                        {id: 1, texto: 'Comprar para comer', completada: false},
+                        {id: 2, texto: 'Hacer el trabajo de la Universidad', completada: true},
+                        {id: 3, texto: 'Mirar información sobre videojuegos', completada: false}
+                    ]
+                }
+            },
+
+            computed: {
+                // propiedad computada: total de tareas
+                totalTareas() {
+                    return this.tareas.length;
+                },
+
+                // propiedad computada: tareas pendientes
+                tareasPendientes() {
+                    return this.tareas.filter(tarea => !tarea.completada).length;
                 }
             },
 
@@ -59,6 +107,24 @@
 
                 decrementar() {
                     this.contador--;
+                },
+
+                //paso 4: método para agregar tarea
+                agregarTarea() {
+                    if (this.nuevaTarea.trim() !== '') {
+                        // generar id unico
+                        const nuevoId = this.tareas.length > 0 ? Math.max(...this.tareas.map(t => t.id)) + 1 : 1;
+
+                        // agregar nueva tarea
+                        this.tareas.push({
+                            id: nuevoId,
+                            texto: this.nuevaTarea,
+                            completada: false
+                        });
+
+                        // limpiar input
+                        this.nuevaTarea = '';
+                    }
                 }
             }
         }).mount('#app')
